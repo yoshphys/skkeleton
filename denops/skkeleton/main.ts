@@ -389,6 +389,10 @@ export const main: Entrypoint = async (denops) => {
         word: midasi,
         candidate: word,
       };
+      // If abbrevFromDirect is active, finalize the session
+      if (context.onAbbrevDone && context.mode === "abbrev") {
+        await initializeStateWithAbbrev(context, ["converter"]);
+      }
     },
     // deno-lint-ignore require-await
     async getConfig() {
