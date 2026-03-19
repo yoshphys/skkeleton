@@ -144,7 +144,7 @@ async function enable(opts: unknown, vimStatus: unknown): Promise<string> {
   return "";
 }
 
-async function enableAbbrev(
+async function abbrevFromDirect(
   opts: unknown,
   vimStatus: unknown,
 ): Promise<string> {
@@ -316,8 +316,8 @@ export const main: Entrypoint = async (denops) => {
         return buildResult(await enable(opts, vimStatus));
       } else if (func === "enable") {
         return buildResult(await enable(opts, vimStatus));
-      } else if (func === "enableAbbrev") {
-        return buildResult(await enableAbbrev(opts, vimStatus));
+      } else if (func === "abbrevFromDirect") {
+        return buildResult(await abbrevFromDirect(opts, vimStatus));
       } else if (func === "disable") {
         return buildResult(await disable(opts, vimStatus));
       } else if (func === "toggle") {
