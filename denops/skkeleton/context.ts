@@ -24,6 +24,8 @@ export class Context {
     word: "",
     candidate: "",
   };
+  // Called when leaving abbrev mode (e.g. to disable after abbrev-from-direct)
+  onAbbrevDone?: () => Promise<void>;
 
   kakutei(str: string) {
     this.preEdit.doKakutei(str);

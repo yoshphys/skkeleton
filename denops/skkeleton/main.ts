@@ -144,6 +144,19 @@ async function enable(opts: unknown, vimStatus: unknown): Promise<string> {
   return "";
 }
 
+async function enableAbbrev(
+  opts: unknown,
+  vimStatus: unknown,
+): Promise<string> {
+  await enable(opts, vimStatus);
+  const context = currentContext.get();
+  context.onAbbrevDone = async () => {
+    await context.denops!.call("skkeleton#disable");
+  };
+  await modeFunctions.get()["abbrev"]?.(context, "");
+  return context.preEdit.output(context.toString());
+}
+
 async function disable(opts: unknown, vimStatus: unknown): Promise<string> {
   const context = currentContext.get();
   const state = currentContext.get().state;
@@ -303,6 +316,8 @@ export const main: Entrypoint = async (denops) => {
         return buildResult(await enable(opts, vimStatus));
       } else if (func === "enable") {
         return buildResult(await enable(opts, vimStatus));
+      } else if (func === "enableAbbrev") {
+        return buildResult(await enableAbbrev(opts, vimStatus));
       } else if (func === "disable") {
         return buildResult(await disable(opts, vimStatus));
       } else if (func === "toggle") {
